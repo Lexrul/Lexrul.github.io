@@ -1,20 +1,26 @@
 *{
-    max-width: 1920px;
+    max-width: 1366px;
     background-color: beige;
+    margin: auto ;
 }
 
 .banner{
-    width: 1920px;
+    width: 1366px;
     height: 300px;
     background-color: blue;
     min-width: 600px;
     min-height: 200px;
+    
 }
 
-nav ul li::before{
-    content: "-->  ";
+nav ul {
+    text-align: center;
+}
+nav li {
+    display: inline;
+    margin: 15px;
 }
 
-nav ul li::after{
-    content:"  <--";
+#ability{
+    background-color: #fff;
 }
