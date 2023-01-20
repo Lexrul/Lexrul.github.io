@@ -5,7 +5,7 @@
 *{
     
     margin: 0;
-    font-family: 'Quicksand';
+    font-family: 'Ubuntu';
     color: #fff;
 }
 section{
@@ -61,16 +61,17 @@ section{
 
 .texto {
     height: 350px;
-    display: flex;
-   flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    
+    
     
     
 }
 
-.texto p {
-    
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
     font-size: 20px;
 }
 
@@ -87,18 +88,19 @@ section{
 button{
     
     display: flex;
+    background-color: rgb(0, 0, 0);
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 0px;
     width: 150px;
-    height: 60px;
-    color: rgb(0, 0, 0);
+    height: 40px;
+    color: rgb(255, 251, 251);
 }
 
 button:hover{
-    color: #fff;
+    color: rgb(0, 0, 0);
     transition: all .3s;
-    background-color: rgb(98, 178, 231);
+    background-color: rgb(238, 238, 238);
     cursor: pointer;
     
 }
