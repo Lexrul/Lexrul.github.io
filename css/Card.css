@@ -47,11 +47,11 @@ section{
 
 
 .foto img{
-    background-color: rgb(111, 135, 214);
+    background-color: rgb(250 173 23);
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: #fff 3px solid;
+    border: #6627bf 6px solid;
     z-index: 100;
     margin-top: -80px;
     
@@ -65,7 +65,9 @@ section{
 .texto .contenedor p:nth-child(2){
     font-size: 15px;
     text-align: center;
+    color: #4fa6db;
 }
+
 .texto {
     height: 350px;  
 }
