@@ -96,6 +96,7 @@ button{
     width: 120px;
     height: 40px;
     color: rgb(255, 251, 251);
+    border: none;
 }
 
 button:hover{
@@ -103,5 +104,6 @@ button:hover{
     transition: all .3s;
     background-color: rgb(238, 238, 238);
     cursor: pointer;
+    
     
 }
