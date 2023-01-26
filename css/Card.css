@@ -58,7 +58,8 @@ section{
     
 }
 .foto img:hover{
-    background-color: rgb(255, 251, 0);
+    background-color: rgb(235 105 82);
+    transition: 1s;
 }
 
 .texto .contenedor p:nth-child(1){
