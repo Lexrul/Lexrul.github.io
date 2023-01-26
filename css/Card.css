@@ -103,13 +103,62 @@ button{
     height: 40px;
     color: rgb(255, 251, 251);
     border: none;
+    cursor: pointer;
 }
 
 button:hover{
     color: rgb(0, 0, 0);
     transition: all .3s;
     background-color: rgb(238, 238, 238);
+    
+    
+    
+}
+
+.texto .contenedor ol {
+    padding: 0 0 0 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    cursor: pointer;
+    
+}
+
+.texto .contenedor ol li i{
+    margin-top: 150px;
     cursor: pointer;
     
     
+}
+.texto .contenedor ol li a{
+    font-size: 20px;
+    
+}
+
+
+
+.fa-github:hover{
+    color: #ffffff;
+    background-color: rgb(245, 6, 233);
+    border-radius: 100%;
+    transition: all .5s;
+}
+.fa-facebook:hover{
+    color: rgb(35, 35, 247);
+    background-color: #fff;
+    border-radius: 100%;
+    transition: all .5s;
+}
+
+.fa-whatsapp:hover{
+    color: rgb(35, 216, 89);
+    
+    border-radius: 100%;
+    transition: all .5s;
+}
+.fa-twitter:hover{
+    color: rgb(27, 165, 230);
+    
+    border-radius: 100%;
+    transition: all .5s;
 }
