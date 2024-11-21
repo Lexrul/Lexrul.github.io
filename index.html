@@ -1,31 +1,353 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/estilos.css">
-    <script src="/js/script.js"></script>
-    <title>Alfonso Garcia - systems and computer engineer</title>
-    
+    <title>Pirámide Mejorada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .piramide, .resultados-db, .resultados-nuevo {
+            margin-top: 20px;
+        }
+        .piramide div, .resultados-db div, .resultados-nuevo div {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        .resultados-db, .resultados-nuevo {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .resultados-db h2, .resultados-nuevo h2 {
+            color: #007BFF;
+        }
+    </style>
 </head>
 <body>
-    <div class="primary-container">
-        <div class="secondary-container">
-            <section class="profile">
-                <h1 style="text-transform: uppercase;font-weight: bold; font-size: 40px; text-align: center;">page under construction</h1>
-            </section>
-
-            <section class="about-me">
-                <h2 style="text-align: center;">404</h2>
-
-                <button style="display: flex; margin-top: 30px;"> <a href="/projects/card.html"> View Card project</a> </button>
-
-                <button style="display: flex; margin-top: 30px;"> <a href="/projects/index.html"> View Yard sale</a> </button>
-            </section>
+    <div class="container">
+        <h1>Pirámide de Loto Mejorada</h1>
+        <p>Introduce un número inicial para generar la pirámide:</p>
+        <input type="text" id="baseInput" placeholder="Ejemplo: 20112024">
+        <button onclick="generarPiramide()">Generar Pirámide</button>
+        <div class="piramide" id="piramideResultado"></div>
+        <div class="resultados-db" id="resultadosDB" style="display: none;">
+            <h2>Resultados de la Penúltima Fila:</h2>
+            <div id="resultados"></div>
+        </div>
+        <div class="resultados-nuevo" id="resultadosNuevoDB" style="display: none;">
+            <h2>Resultados del Nuevo Número:</h2>
+            <div id="resultadosNuevo"></div>
         </div>
     </div>
 
- 
+    <script>
+        // Base de datos de resultados
+        const baseDeDatos = {
+    "01": ["77", "28"],
+    "02": ["50", "27"],
+    "03": ["50", "28"],
+    "04": ["74", "29"],
+    "05": ["75", "60"],
+    "06": ["19", "21"],
+    "07": ["73", "32"],
+    "08": ["46", "35"],
+    "09": ["94", "52"],
+    "10": ["14", "25"],
+    "11": ["07", "30"],
+    "12": ["70", "37"],
+    "13": ["81", "42"],
+    "14": ["91", "97"],
+    "15": ["86", "40"],
+    "16": ["90", "41"],
+    "17": ["91", "42"],
+    "18": ["40", "98"],
+    "19": ["74", "74"],
+    "20": ["77", "80"],
+    "21": ["80", "81"],
+    "22": ["68", "49"],
+    "23": ["41", "14"],
+    "24": ["46", "49"],
+    "25": ["04", "60"],
+    "26": ["52", "22"],
+    "27": ["44", "28"],
+    "28": ["44", "23"],
+    "29": ["76", "79"],
+    "30": ["68", "61"],
+    "31": ["47", "44"],
+    "32": ["01", "29"],
+    "33": ["15", "05"],
+    "34": ["84", "12"],
+    "35": ["91", "53"],
+    "36": ["98", "76"],
+    "37": ["76", "37"],
+    "38": ["57", "53"],
+    "39": ["94", "95"],
+    "40": ["97", "99"],
+    "41": ["59", "88"],
+    "42": ["47", "51"],
+    "43": ["80", "07"],
+    "44": ["65", "55"],
+    "45": ["75", "70"],
+    "46": ["81", "59"],
+    "47": ["74", "89"],
+    "48": ["70", "63"],
+    "49": ["23", "29"],
+    "50": ["80", "30"],
+    "51": ["50", "46"],
+    "52": ["97", "47"],
+    "53": ["55", "80"],
+    "54": ["68", "92"],
+    "55": ["32", "90"],
+    "56": ["16", "38"],
+    "57": ["99", "92"],
+    "58": ["05", "93"],
+    "59": ["32", "47"],
+    "60": ["04", "34"],
+    "61": ["54", "04"],
+    "62": ["10", "66"],
+    "63": ["16", "69"],
+    "64": ["22", "43"],
+    "65": ["59", "99"],
+    "66": ["58", "34"],
+    "67": ["68", "39"],
+    "68": ["80", "44"],
+    "69": ["88", "92"],
+    "70": ["49", "93"],
+    "71": ["27", "16"],
+    "72": ["60", "58"],
+    "73": ["01", "00"],
+    "74": ["98", "17"],
+    "75": ["40", "19"],
+    "76": ["00", "87"],
+    "77": ["91", "76"],
+    "78": ["92", "25"],
+    "79": ["31", "12"],
+    "80": ["27", "61"],
+    "81": ["47", "36"],
+    "82": ["15", "38"],
+    "83": ["76", "37"],
+    "84": ["21", "62"],
+    "85": ["60", "18"],
+    "86": ["25", "51"],
+    "87": ["18", "21"],
+    "88": ["50", "11"],
+    "89": ["88", "10"],
+    "90": ["77", "83"],
+    "91": ["10", "95"],
+    "92": ["06", "58"],
+    "93": ["43", "01"],
+    "94": ["02", "60"],
+    "95": ["26", "63"],
+    "96": ["12", "68"],
+    "97": ["04", "61"],
+    "98": ["79", "32"],
+    "99": ["19", "35"],
+    "00": ["21", "69"]
+        };
+
+        // Base de datos para el nuevo número
+        const baseDeDatosNuevo = {
+    "01": ["77", "28"],
+    "02": ["50", "27"],
+    "03": ["50", "28"],
+    "04": ["74", "29"],
+    "05": ["75", "60"],
+    "06": ["19", "21"],
+    "07": ["73", "32"],
+    "08": ["46", "35"],
+    "09": ["94", "52"],
+    "10": ["14", "25"],
+    "11": ["07", "30"],
+    "12": ["70", "37"],
+    "13": ["81", "42"],
+    "14": ["91", "97"],
+    "15": ["86", "40"],
+    "16": ["90", "41"],
+    "17": ["91", "42"],
+    "18": ["40", "98"],
+    "19": ["74", "74"],
+    "20": ["77", "80"],
+    "21": ["80", "81"],
+    "22": ["68", "49"],
+    "23": ["41", "14"],
+    "24": ["46", "49"],
+    "25": ["04", "60"],
+    "26": ["52", "22"],
+    "27": ["44", "28"],
+    "28": ["44", "23"],
+    "29": ["76", "79"],
+    "30": ["68", "61"],
+    "31": ["47", "44"],
+    "32": ["01", "29"],
+    "33": ["15", "05"],
+    "34": ["84", "12"],
+    "35": ["91", "53"],
+    "36": ["98", "76"],
+    "37": ["76", "37"],
+    "38": ["57", "53"],
+    "39": ["94", "95"],
+    "40": ["97", "99"],
+    "41": ["59", "88"],
+    "42": ["47", "51"],
+    "43": ["80", "07"],
+    "44": ["65", "55"],
+    "45": ["75", "70"],
+    "46": ["81", "59"],
+    "47": ["74", "89"],
+    "48": ["70", "63"],
+    "49": ["23", "29"],
+    "50": ["80", "30"],
+    "51": ["50", "46"],
+    "52": ["97", "47"],
+    "53": ["55", "80"],
+    "54": ["68", "92"],
+    "55": ["32", "90"],
+    "56": ["16", "38"],
+    "57": ["99", "92"],
+    "58": ["05", "93"],
+    "59": ["32", "47"],
+    "60": ["04", "34"],
+    "61": ["54", "04"],
+    "62": ["10", "66"],
+    "63": ["16", "69"],
+    "64": ["22", "43"],
+    "65": ["59", "99"],
+    "66": ["58", "34"],
+    "67": ["68", "39"],
+    "68": ["80", "44"],
+    "69": ["88", "92"],
+    "70": ["49", "93"],
+    "71": ["27", "16"],
+    "72": ["60", "58"],
+    "73": ["01", "00"],
+    "74": ["98", "17"],
+    "75": ["40", "19"],
+    "76": ["00", "87"],
+    "77": ["91", "76"],
+    "78": ["92", "25"],
+    "79": ["31", "12"],
+    "80": ["27", "61"],
+    "81": ["47", "36"],
+    "82": ["15", "38"],
+    "83": ["76", "37"],
+    "84": ["21", "62"],
+    "85": ["60", "18"],
+    "86": ["25", "51"],
+    "87": ["18", "21"],
+    "88": ["50", "11"],
+    "89": ["88", "10"],
+    "90": ["77", "83"],
+    "91": ["10", "95"],
+    "92": ["06", "58"],
+    "93": ["43", "01"],
+    "94": ["02", "60"],
+    "95": ["26", "63"],
+    "96": ["12", "68"],
+    "97": ["04", "61"],
+    "98": ["79", "32"],
+    "99": ["19", "35"],
+    "00": ["21", "69"]
+        };
+
+        function generarPiramide() {
+            const base = document.getElementById('baseInput').value;
+            if (!/^\d+$/.test(base)) {
+                alert("Por favor, ingresa solo números.");
+                return;
+            }
+
+            let piramide = [base];
+            let resultadoDiv = document.getElementById('piramideResultado');
+            resultadoDiv.innerHTML = ""; // Limpiar resultados previos
+            document.getElementById('resultadosDB').style.display = "none"; // Ocultar sección especial
+            document.getElementById('resultadosNuevoDB').style.display = "none"; // Ocultar nueva sección especial
+
+            // Generar pirámide
+            while (piramide[piramide.length - 1].length > 1) {
+                let numeros = piramide[piramide.length - 1].split("").map(Number);
+                let nuevaFila = "";
+                for (let i = 0; i < numeros.length - 1; i++) {
+                    nuevaFila += (numeros[i] + numeros[i + 1]) % 10;
+                }
+                piramide.push(nuevaFila);
+            }
+
+            // Mostrar pirámide
+            piramide.forEach(fila => {
+                let filaDiv = document.createElement('div');
+                filaDiv.textContent = fila;
+                resultadoDiv.appendChild(filaDiv);
+            });
+
+            // Mostrar resultados de la penúltima fila
+            const penultimaFila = piramide[piramide.length - 2];
+            if (baseDeDatos[penultimaFila]) {
+                const resultados = baseDeDatos[penultimaFila];
+                let resultadosDiv = document.getElementById('resultados');
+                resultadosDiv.innerHTML = ""; // Limpiar resultados previos
+                resultados.forEach(resultado => {
+                    let resultadoItem = document.createElement('div');
+                    resultadoItem.textContent = resultado;
+                    resultadosDiv.appendChild(resultadoItem);
+                });
+                document.getElementById('resultadosDB').style.display = "block";
+            }
+
+            // Calcular nuevo número y mostrar resultados
+            if (piramide.length >= 3) {
+                const antepenultimaFila = piramide[piramide.length - 3];
+                if (antepenultimaFila.length > 0 && penultimaFila.length > 1) {
+                    const nuevoNumero = parseInt(antepenultimaFila[0] + penultimaFila[1]);
+                    if (baseDeDatosNuevo[nuevoNumero]) {
+                        const resultadosNuevo = baseDeDatosNuevo[nuevoNumero];
+                        let resultadosNuevoDiv = document.getElementById('resultadosNuevo');
+                        resultadosNuevoDiv.innerHTML = ""; // Limpiar resultados previos
+                        resultadosNuevo.forEach(resultado => {
+                            let resultadoItem = document.createElement('div');
+                            resultadoItem.textContent = resultado;
+                            resultadosNuevoDiv.appendChild(resultadoItem);
+                        });
+                        document.getElementById('resultadosNuevoDB').style.display = "block";
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>
